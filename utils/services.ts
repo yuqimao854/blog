@@ -40,3 +40,7 @@ export const queryPostsFromIssues = () =>
     name: REPO_NAME,
   }
 )
+
+export const queryProfileREADME = () =>{
+    
+}
