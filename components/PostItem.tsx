@@ -1,9 +1,10 @@
-import { FC } from "react"
+import type{  FC,  ReactNode } from "react"
+import { IssueContentBaseFields } from "../types"
+ 
 
 
-const PostItem:FC = (props) =>{
+export const PostItem:FC<IssueContentBaseFields> = (props:IssueContentBaseFields) =>{
     console.log(props)
-    return <div> i am post item</div>
+    const {title} = props
+    return <div> {title} </div>
 }
-
-export default PostItem
