@@ -17,6 +17,7 @@ export interface Repository<T> {
     createdAt: string
     updatedAt: string
     labels: Labels
+    id:string;
   }
   
   export interface IssueContent extends IssueContentBaseFields {
@@ -36,4 +37,4 @@ export interface Repository<T> {
   export type IRepositoryIssues = Repository<{ issues: Issues }>
   export type RepositoryIssue = Repository<{ issue: IssueContent }>
   
-  export type RepositoryFile = Repository<{ object: { text: string } }>
+  export type IRepositoryFile = Repository<{ object: { text: string } }>

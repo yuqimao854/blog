@@ -1,10 +1,16 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { queryPostsFromIssues } from '../utils'
+import { Issues } from '../types'
+import { queryPostsFromIssues, renderProfileMarkdown } from '../utils'
 
+interface BlogProps {
+  issues: Issues
+  profile: string
+}
 
-const Blog: NextPage = (props) => {
-  console.log(props)
+const Blog: NextPage<BlogProps> = (props:BlogProps) => {
+
+  const {issues,profile} = props
   return (
     <div>
       <Head>
@@ -13,9 +19,19 @@ const Blog: NextPage = (props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="lg:flex"> 
-        <div>left </div>
-        <div>right</div>
-        我真的有文章了哦
+        <div dangerouslySetInnerHTML={{__html:profile}} />
+    <div className='w-full p-0 m-0 md:grid md:grid-cols-2 md:gap-2'>
+
+ 
+        <div className='w-full p-0 m-0 md:grid md:grid-cols-2 md:gap-2'>
+           {issues.nodes.map(item=>{
+             return  <div className=' bg-red-100 mb-2 md:mb-0 list-none overflow-hidden cursor-pointer transform transition-special md:group-hover:opacity-50 hover:!opacity-100 md:hover:scale-110' >
+
+                <div className='h-full p-6 md:p-10 bg-tertiary hover:shadow-sm transition duration-700 ease-in-out-quart'   key={item.id}>{item.title} </div>
+              </div>
+           })}
+        </div>
+        </div>
       </div>
     </div>
   )
@@ -23,13 +39,22 @@ const Blog: NextPage = (props) => {
 
 
 
-export const     getServerSideProps   = async ()=> {
+export const   getServerSideProps   = async ()=> {
   // Fetch data from external API
 
-  const res =   await queryPostsFromIssues()
 
+  const [
+    {
+      repository:{issues}
+    },{
+      data:profile
+    }] = await Promise.all([
+    await queryPostsFromIssues(),
+    await renderProfileMarkdown()
+  ])
+ 
   // Pass data to the page via props
-  return { props: { issues:res.repository.issues } }
+  return { props: { issues:issues,profile } }
 }
 
 export default Blog

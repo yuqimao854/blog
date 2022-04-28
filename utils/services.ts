@@ -1,5 +1,5 @@
-import { IRepositoryIssues } from "../types";
-import { graphql } from "./request";
+import { IRepositoryIssues,IRepositoryFile } from "../types";
+import { graphql, request } from "./request";
 export const REPO_OWNER = 'yuqimao854'
 export const REPO_NAME = 'blog'
 
@@ -15,6 +15,7 @@ export const queryPostsFromIssues = () =>
           filterBy: { createdBy: $owner }
         ) {
           nodes {
+            id
             number
             title
             createdAt
@@ -41,6 +42,33 @@ export const queryPostsFromIssues = () =>
   }
 )
 
-export const queryProfileREADME = () =>{
-    
+export const queryProfileREADME = async() =>
+  graphql<IRepositoryFile>(
+    `
+      query queryProfileREADME($owner: String!) {
+        repository(owner: $owner, name: $owner) {
+          object(expression: "main:README.md") {
+            ... on Blob {
+              text
+            }
+          }
+        }
+      }
+    `,
+    {
+      owner: REPO_OWNER,
+    }
+  )
+
+
+export const renderMarkdown = (text: string) =>
+  request('POST /markdown', {
+    text,
+  })
+
+// mix
+
+export const renderProfileMarkdown = async() =>{
+const res = await queryProfileREADME()
+return renderMarkdown(res.repository.object.text)
 }
