@@ -1,0 +1,12 @@
+@import '@primer/css/markdown';
+@tailwind base;
+
+@tailwind utilities;
+
+body {
+  .profile-markdown {
+    img {
+      display: inline;
+    }
+  }
+}

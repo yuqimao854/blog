@@ -1,2 +1,2 @@
-export {PostItem} from './PostItem'
-export {Header} from './Header'
+export { PostItem } from './PostItem';
+export { Profile } from './Profile';

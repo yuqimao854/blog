@@ -1,25 +1,63 @@
-import { IRepositoryIssues,IRepositoryFile } from "../types";
-import { graphql, request } from "./request";
-export const REPO_OWNER = 'yuqimao854'
-export const REPO_NAME = 'blog'
-
+import {
+  IRepositoryIssues,
+  IRepositoryFile,
+  IRepositoryIssue,
+} from '@interfaces';
+import { graphql, request } from './request';
+export const REPO_OWNER = 'yuqimao854';
+export const REPO_NAME = 'blog';
 
 export const queryPostsFromIssues = () =>
- graphql<IRepositoryIssues>(
-  ` query queryPostsFromIssues($owner: String!, $name: String!) {
-      repository(owner: $owner, name: $name) {
-        issues(
-          states: CLOSED
-          first: 100
-          orderBy: { field: CREATED_AT, direction: DESC }
-          filterBy: { createdBy: $owner }
-        ) {
-          nodes {
-            id
+  graphql<IRepositoryIssues>(
+    `
+      query queryPostsFromIssues($owner: String!, $name: String!) {
+        repository(owner: $owner, name: $name) {
+          issues(
+            states: CLOSED
+            first: 100
+            orderBy: { field: CREATED_AT, direction: DESC }
+            filterBy: { createdBy: $owner }
+          ) {
+            nodes {
+              id
+              number
+              title
+              createdAt
+              updatedAt
+              labels(first: 5) {
+                nodes {
+                  color
+                  name
+                  id
+                }
+              }
+            }
+            pageInfo {
+              hasNextPage
+              endCursor
+            }
+            totalCount
+          }
+        }
+      }
+    `,
+    {
+      owner: REPO_OWNER,
+      name: REPO_NAME,
+    }
+  );
+
+export const queryPostByNumber = (number: number) =>
+  graphql<IRepositoryIssue>(
+    `
+      query queryIssueByNumber($number: Int!, $owner: String!, $name: String!) {
+        repository(owner: $owner, name: $name) {
+          issue(number: $number) {
             number
             title
+            url
             createdAt
-            updatedAt
+            bodyHTML
             labels(first: 5) {
               nodes {
                 color
@@ -27,22 +65,17 @@ export const queryPostsFromIssues = () =>
               }
             }
           }
-          pageInfo {
-            hasNextPage
-            endCursor
-          }
-          totalCount
         }
       }
+    `,
+    {
+      number,
+      owner: REPO_OWNER,
+      name: REPO_NAME,
     }
-  `,
-  {
-    owner: REPO_OWNER,
-    name: REPO_NAME,
-  }
-)
+  );
 
-export const queryProfileREADME = async() =>
+export const queryProfileREADME = async () =>
   graphql<IRepositoryFile>(
     `
       query queryProfileREADME($owner: String!) {
@@ -58,17 +91,16 @@ export const queryProfileREADME = async() =>
     {
       owner: REPO_OWNER,
     }
-  )
-
+  );
 
 export const renderMarkdown = (text: string) =>
   request('POST /markdown', {
     text,
-  })
+  });
 
 // mix
 
-export const renderProfileMarkdown = async() =>{
-const res = await queryProfileREADME()
-return renderMarkdown(res.repository.object.text)
-}
+export const renderProfileMarkdown = async () => {
+  const res = await queryProfileREADME();
+  return renderMarkdown(res.repository.object.text);
+};
