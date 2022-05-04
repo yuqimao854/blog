@@ -21,13 +21,19 @@ const Blog: NextPage<BlogProps> = (props: BlogProps) => {
       </Head>
 
       <div>
-        <div className='md:flex justify-between'>
+        <div className='relative '>
           <Profile profile={profile} />
 
-          <div className='  basis-7/12 lg:px-16 lg:py-24  sm:py-12 sm:px-12  '>
+          <div className=' lg:w-[60vw]  lg:absolute lg:right-0  xl:px-16 xl:py-24  lg:py-20 lg:px-12  '>
             <div className=' group  '>
-              <div className=' lg:grid grid-cols-2 gap-4   '>
-                {issues.nodes.map((item) => {
+              <div className=' xl:grid  xl:grid-cols-2 xl:gap-4   '>
+                {[
+                  ...issues.nodes,
+                  ...issues.nodes,
+                  ...issues.nodes,
+                  ...issues.nodes,
+                  ...issues.nodes,
+                ].map((item) => {
                   return <PostItem {...item} key={item.id} />;
                 })}
               </div>

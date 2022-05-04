@@ -9,7 +9,7 @@ export const PostItem: FC<IssueContentBaseFields> = (
 ) => {
   const { title, createdAt, labels, number } = props;
   return (
-    <div className='  mb-2 lg:mb-0 cursor-pointer md:group-hover:opacity-50  bg-slate-200  md:hover:scale-110 md:hover:!opacity-100  h-full p-6 md:p-10   hover:shadow-sm transition duration-700 ease-in-out-quart'>
+    <div className=' mb-3 xl:mb-0 cursor-pointer md:group-hover:opacity-50  bg-slate-200  md:hover:scale-110 md:hover:!opacity-100  h-full p-6 md:p-10   hover:shadow-sm transition duration-700 ease-in-out-quart'>
       <Link href={`/posts/${number}`}>
         <div>
           <h4 className='font-semibold text-lg uppercase'>

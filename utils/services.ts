@@ -62,6 +62,7 @@ export const queryPostByNumber = (number: number) =>
               nodes {
                 color
                 name
+                id
               }
             }
           }
