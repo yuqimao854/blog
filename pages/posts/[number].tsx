@@ -23,7 +23,7 @@ const Post: NextPage<PostProps> = (props: PostProps) => {
   return (
     <div>
       <Head>
-        <title>{title} | 'yuqimao854'</title>
+        <title>{title} | yuqimao854</title>
       </Head>
 
       <div className='px-8 md:px-12 lg:px-24 xl:px-32 font-inconsolata'>
@@ -58,6 +58,7 @@ const Post: NextPage<PostProps> = (props: PostProps) => {
                 className='ml-4 duration-700 ease-in-out-quart transition-colors  underline hover:text-gray-800 dark:hover:text-gray-400'
                 href={url}
                 target='_blank'
+                rel='noreferrer'
               >
                 View on Github
               </a>
