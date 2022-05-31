@@ -1,9 +1,9 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import { PostItem, Profile } from '../components';
+import { PostItem, Profile } from 'components';
 
-import { Issues } from '../interfaces';
-import { queryPostsFromIssues, renderProfileMarkdown } from '../utils';
+import { Issues } from 'interfaces';
+import { queryPostsFromIssues, renderProfileMarkdown } from 'utils';
 
 interface BlogProps {
   issues: Issues;
@@ -27,13 +27,7 @@ const Blog: NextPage<BlogProps> = (props: BlogProps) => {
           <div className=' lg:w-[60vw]  lg:absolute lg:right-0  xl:px-16 xl:py-24  lg:py-20 lg:px-12  '>
             <div className=' group  '>
               <div className=' xl:grid  xl:grid-cols-2 xl:gap-4   '>
-                {[
-                  ...issues.nodes,
-                  ...issues.nodes,
-                  ...issues.nodes,
-                  ...issues.nodes,
-                  ...issues.nodes,
-                ].map((item) => {
+                {[...issues.nodes].map((item) => {
                   return <PostItem {...item} key={item.id} />;
                 })}
               </div>

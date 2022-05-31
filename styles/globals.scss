@@ -1,6 +1,8 @@
 @import '@primer/css/markdown';
 @import './colors';
 @import './code-highlight';
+@import '~nprogress/nprogress.css';
+@import './gitalk.scss';
 
 @tailwind base;
 

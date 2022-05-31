@@ -2,11 +2,13 @@ import { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
 import { ParsedUrlQuery } from 'querystring';
 import { IssueContent } from '@interfaces';
-import { formatDate, queryPostByNumber } from '@utils';
+import { formatDate, queryPostByNumber, REPO_NAME, REPO_OWNER } from '@utils';
 import _ from 'lodash';
 import Link from 'next/link';
 import { Tag } from 'components';
 import { CalendarIcon } from 'components/Icon';
+import { useEffect } from 'react';
+import Gitalk from 'gitalk';
 
 interface IPostPageParams extends ParsedUrlQuery {
   number: string;
@@ -18,7 +20,20 @@ interface PostProps {
 
 const Post: NextPage<PostProps> = (props: PostProps) => {
   const { issue } = props;
-  const { title, labels, createdAt, url, bodyHTML } = issue;
+  const { title, labels, createdAt, url, bodyHTML, number } = issue;
+
+  useEffect(() => {
+    const gitalk = new Gitalk({
+      clientID: process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID as string,
+      clientSecret: process.env.NEXT_PUBLIC_GITHUB_CLIENT_SECRET as string,
+      repo: REPO_NAME,
+      owner: REPO_OWNER,
+      admin: [REPO_OWNER],
+      number,
+    });
+
+    gitalk.render('gitalk-container');
+  }, []);
 
   return (
     <div>
@@ -71,7 +86,7 @@ const Post: NextPage<PostProps> = (props: PostProps) => {
             ></div>
           </article>
         </main>
-
+        <div id='gitalk-container' />
         <footer></footer>
       </div>
     </div>
