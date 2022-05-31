@@ -64,7 +64,7 @@ const Post: NextPage<PostProps> = (props: PostProps) => {
               </a>
             </p>
           </div>
-          <article className='markdown-body max-w-3xl mx-auto lg:p-8 mt-16'>
+          <article className='markdown-body mx-auto lg:p-8 mt-16'>
             <div
               className='markdown-body-content mb-16 transition-colors duration-700 ease-in-out-quart'
               dangerouslySetInnerHTML={{ __html: bodyHTML }}

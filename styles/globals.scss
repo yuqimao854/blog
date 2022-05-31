@@ -1,4 +1,7 @@
 @import '@primer/css/markdown';
+@import './colors';
+@import './code-highlight';
+
 @tailwind base;
 
 @tailwind utilities;
