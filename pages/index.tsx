@@ -21,7 +21,7 @@ const Blog: NextPage<BlogProps> = (props: BlogProps) => {
       </Head>
 
       <div>
-        <div className='relative '>
+        <div className='relative  my-8 mx-16  lg:m-0  '>
           <Profile profile={profile} />
 
           <div className=' lg:w-[60vw]  lg:absolute lg:right-0  xl:px-16 xl:py-24  lg:py-20 lg:px-12  '>
